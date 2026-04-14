@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard POS - MoCA</title>
+    <!-- Oracle JET CSS -->
+    <link rel="stylesheet" href="https://static.oracle.com/cdn/jet/11.0.0/default/css/alta/oj-alta-min.css">
+    <script src="https://static.oracle.com/cdn/jet/11.0.0/default/js/libs/jquery/jquery-3.6.0.min.js"></script>
+    <script src="https://static.oracle.com/cdn/jet/11.0.0/default/js/libs/knockout/knockout-3.5.1.js"></script>
+    <script src="https://static.oracle.com/cdn/jet/11.0.0/default/js/libs/require/require.js"></script>
+    <script src="https://static.oracle.com/cdn/jet/11.0.0/default/js/libs/es6-promise/es6-promise.auto.min.js"></script>
+
+    <script>
+        require.config({
+            paths: {
+                'ojs': 'https://static.oracle.com/cdn/jet/11.0.0/default/js/min',
+                'ojL10n': 'https://static.oracle.com/cdn/jet/11.0.0/default/js/min',
+                'knockout': 'https://static.oracle.com/cdn/jet/11.0.0/default/js/libs/knockout/knockout-3.5.1',
+                'jquery': 'https://static.oracle.com/cdn/jet/11.0.0/default/js/libs/jquery/jquery-3.6.0.min',
+                'text': 'https://static.oracle.com/cdn/jet/11.0.0/default/js/libs/require/text',
+                'signals': 'https://static.oracle.com/cdn/jet/11.0.0/default/js/libs/js-signals/signals.min'
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="app-contenido">
+        <!-- Main Content -->
+        <div class="contenido-principal">
+            <div class="header-seccion">
+                <div class="attendant-text">Le atiende: pancho</div>
+                <a href="#" class="complaints-link">Quejas y sugerencias: 555-123-4567</a>
+            </div>
+
+            <div class="busqueda">
+                <input type="text" placeholder="Código de barras        (Enter Agregar producto)"
+                    style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 14px;">
+            </div>
+
+            <div>
+                <div style="display: flex;">
+                    <div class="pestaña activa">
+                        Ticket
+                        <label id="LblTicket"></label>
+                    </div>
+                    <div class="pestaña">
+                        +
+                        <label id="LblTicket"></label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="contorno-cuadro">
+                <oj-table id='TableProd' aria-label='Productos' data='[[dataProvider]]'
+                    selection-mode='{"row": "single", "column": "none"}' columns-default='{"sortable": "enabled"}'
+                    columns='[[myColumns]]' style='width:100%; font-size:13px;'>
+                    <template slot="deleteTemplate">
+                        <span class="delete-icon">🗑️</span>
+                    </template>
+                </oj-table>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="columna-derecha">
+            <div>
+                <h2>
+                    <oj-bind-text value="[[fechaActualFormateada]]"></oj-bind-text>
+                </h2>
+            </div>
+
+            <oj-button class="btn-advertencia" on-oj-action="[[Btn_VentasDia]]">
+                Ventas del día y devoluciones
+            </oj-button>
+
+            <div class="cuadro-venta-centrado">
+                <div style="font-weight: bold; margin-bottom: 10px;">
+                    <h2 style="font-weight: bold; margin-bottom: 10px;">Total:</h2>
+
+                </div>
+                <div>
+                    <h2 id="LblCobroTotal" style="font-size: 2em; color: #007bff; font-weight: bold;">
+                        <oj-bind-text value="[[CobroTotal]]"></oj-bind-text>
+                    </h2>
+                </div>
+                <div class="conteo-productos">N° de productos: <oj-bind-text id="LblNumProductos"
+                        value="[[CountNumProductos]]"></oj-bind-text></div>
+
+            </div>
+
+            <oj-button class="btn-primario" on-oj-action="[[Btn_Cobrar]]">
+                Cobrar
+            </oj-button>
+
+            <div class="cuadro-venta" style="margin: 5px;">
+                <div>
+                    <div class="linea-cuadro-venta cuadro-venta-total">
+                        <span>TOTAL:</span>
+                        <oj-bind-text id="LblRegTotal" value="[[CobroTotal]]"></oj-bind-text>
+                    </div>
+                    <div class="linea-cuadro-venta">
+                        <span>PAGO:</span>
+                        <oj-bind-text id="LblRegPago" value="[[RegPago]]"></oj-bind-text>
+                    </div>
+                    <div class="linea-cuadro-venta">
+                        <span>CAMBIO:</span>
+                        <oj-bind-text id="LblRegCambio" value="[[RegCambio]]"></oj-bind-text>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

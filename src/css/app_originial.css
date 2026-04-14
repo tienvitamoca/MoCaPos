@@ -1,0 +1,303 @@
+/******************************************************
+ * 1) VARIABLES GLOBALES
+ *    Colores, tipografía, tamaños y sombras
+ ******************************************************/
+:root {
+  /* Colores principales */
+  --color-primario: #007BFF;
+  --color-secundario: #0284C7;
+  --color-error: #DC2626;
+  --color-advertencia: #F59E0B;
+  --color-exito: #10B981;
+
+  /* Escala de grises */
+  --color-blanco: #f8f8f8;
+  --color-gris-claro: #f1eaea;
+  --color-gris: #e9e9e9;
+  --color-gris-oscuro: #d4d4d4;
+
+  /* Botones */
+  --btn-primario: #10B981;
+  --btn-secundario: #0284C7;
+  --btn-advertencia: #F59E0B;
+  --btn-error: #dc2626ea;
+
+  /* Fondo general */
+  --color-fondo: #F3F4F6;
+
+  /* Menú lateral */
+  --color-menu: #b2bdce;
+  --color-menu-hover: #374151;
+  --color-menu-activo: var(--color-exito);
+
+  /* Tipografía */
+  --font-principal: "Roboto", sans-serif;
+  --texto-secundario: #9c9c9c;
+
+  /* Dimensiones layout */
+  --tam-menu: 260px;
+  --tam-menu-movil: 200px;
+  --tam-header: 55px;
+  --tam-footer: 45px;
+
+  /* Sombra estándar */
+  --sombra-tarjeta: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/******************************************************
+ * 2) RESET GLOBAL
+ ******************************************************/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-principal);
+}
+
+html,
+body,
+.oj-web-applayout-body,
+#globalBody {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/******************************************************
+ * 3) ESTRUCTURA GENERAL DE LA APP
+ ******************************************************/
+.app-contenido {
+  display: flex;
+  height: 100%;
+}
+
+/* Header (solo móvil) */
+.header {
+  display: none;
+  height: var(--tam-header);
+}
+
+/* Footer desktop */
+.footer {
+  height: var(--tam-footer);
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+/* Footer móvil */
+.footer-movil {
+  display: none;
+}
+
+/******************************************************
+ * 4) MENÚ LATERAL
+ ******************************************************/
+.menu {
+  width: var(--tam-menu);
+  background-color: var(--color-menu);
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  transition: transform 0.3s ease;
+}
+
+.menu-logo {
+  text-align: center;
+}
+
+.menu-logo img {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+.menu-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #d1d5db;
+}
+
+.menu-item:hover {
+  background-color: var(--color-primario);
+}
+
+/* Oracle JET activo */
+.menu oj-tab-bar .oj-tabbar-item.oj-active {
+  background-color: var(--color-menu-activo) !important;
+}
+
+.menu oj-tab-bar .oj-tabbar-item.oj-active .oj-tabbar-item-label {
+  color: var(--color-error) !important;
+}
+
+/******************************************************
+ * 5) CONTENIDO PRINCIPAL
+ ******************************************************/
+.contenido-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+/* Columnas */
+.cont-izquierdo,
+.col-center,
+.cont-derecho {
+  display: flex;
+  flex-direction: column;
+}
+
+.cont-derecho {
+  width: 320px;
+  background-color: var(--color-gris-claro);
+  padding: 20px;
+  border-left: 1px solid #dee2e6;
+}
+
+/******************************************************
+ * 6) COMPONENTES COMUNES
+ ******************************************************/
+.header-seccion {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tarjeta {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--sombra-tarjeta);
+  margin-bottom: 20px;
+}
+
+.conteo-productos {
+  text-align: center;
+  font-size: 16px;
+}
+
+/******************************************************
+ * 7) BOTONES
+ ******************************************************/
+.btn,
+.btn-primario,
+.btn-secundario,
+.btn-advertencia {
+  border-radius: 4px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+/******************************************************
+ * 8) TABLAS
+ ******************************************************/
+table {
+  width: 100%;
+  border: 1px solid var(--color-gris-oscuro);
+}
+
+table th,
+table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+table tr:hover {
+  background-color: #f9fafb;
+}
+
+/******************************************************
+ * 9) OVERLAY PARA MENÚ MÓVIL
+ ******************************************************/
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 900;
+  display: none;
+}
+
+/******************************************************
+ * 10) RESPONSIVE BREAKPOINTS
+ ******************************************************/
+
+/* ≥1600px */
+@media (max-width: 1600px) {
+  .cont-derecho {
+    width: 250px;
+  }
+}
+
+/* ≤1300px */
+@media (max-width: 1300px) {
+  .menu,
+  .cont-derecho {
+    width: var(--tam-menu-movil);
+  }
+}
+
+/* ≤900px (Tablet / POS táctil) */
+@media (max-width: 900px) {
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .menu {
+    position: fixed;
+    top: var(--tam-header);
+    left: 0;
+    height: calc(100% - var(--tam-header));
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+
+  .menu.menu-open {
+    transform: translateX(0);
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  footer {
+    display: none !important;
+  }
+
+  .footer-movil {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    z-index: 2000;
+  }
+
+  .cont-izquierdo,
+  .cont-derecho {
+    display: none;
+  }
+}
+
+/* ≤600px */
+@media (max-width: 600px) {
+  .menu {
+    width: 80%;
+  }
+}

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--
+ Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+
+<!-- ************************ IMPORTANT INFORMATION ************************************
+  This web navigation drawer template is provided as an example of how to configure
+  a JET web application with a navigation drawer as a single page application
+  using ojRouter and oj-module.  It contains the Oracle JET framework and a default
+  requireJS configuration file to show how JET can be setup in a common application.
+  This project template can be used in conjunction with demo code from the JET
+  website to test JET component behavior and interactions.
+
+  Any CSS styling with the prefix "demo-" is for demonstration only and is not
+  provided as part of the JET framework.
+
+  Please see the demos under Cookbook/Patterns/App Shell: Web and the CSS documentation
+  under Support/API Docs/Non-Component Styling on the JET website for more information on how to use
+  the best practice patterns shown in this template.
+
+  Aria Landmark role attributes are added to the different sections of the application
+  for accessibility compliance. If you change the type of content for a specific
+  section from what is defined, you should also change the role value for that
+  section to represent the appropriate content type.
+  ***************************** IMPORTANT INFORMATION ************************************ -->
+<html lang="en-us">
+
+<head>
+  <title>AbarroNext</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
+  <link rel="icon" href="css/images/logo.png" type="image/x-icon" />
+
+  <!-- This is the main css file for the default theme -->
+  <!-- injector:theme -->
+  <!-- endinjector -->
+
+  <!-- This contains icon fonts used by the starter template -->
+  <!-- injector:font -->
+  <!-- endinjector:font -->
+
+  <!-- This is where you would add any app specific styling -->
+  <link rel="stylesheet" href="https://static.oracle.com/cdn/jet/19.0.0/…/oj-redwood.css">
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
+
+</head>
+
+<body class="oj-web-applayout-body">
+  <!-- Template for rendering navigation items shared between nav bar and nav list -->
+  <script type="text/html" id="navTemplate">
+      <li class="menu-item" data-bind="css: { activo: $data['isSelected'] }"><a href="#">
+        <span  :class="[[$data.detail.iconClass]]"></span>
+        <oj-bind-text value="[[$data.detail.label]]"></oj-bind-text>
+      </a></li>
+    </script>
+
+  <div id="globalBody">
+
+    <!-- <div id="announce" tabindex="-1" class="send-off-screen" :aria-live="[[manner]]" aria-atomic="true">
+      <p id="ariaLiveMessage"><oj-bind-text value="[[message]]"></oj-bind-text></p>
+    </div> -->
+
+    <!--
+         ** Oracle JET V19.0.0 web application navigation drawer pattern.
+         ** Please see the demos under Cookbook/Patterns/App Shell: Web
+         ** and the CSS documentation under Support/API Docs/Non-Component Styling
+         ** on the JET website for more information on how to use this pattern.
+         ** The off-canvas section is used when the browser is resized to a smaller media
+         ** query size for a phone format and hidden until a user clicks on
+         ** the header hamburger icon.
+      -->
+    <oj-drawer-popup id="navDrawer" edge="start" opened="{{sideDrawerOn}}" modality="modeless" role="navigation"
+      class="oj-bg-neutral-170 oj-color-invert">
+      <oj-navigation-list id="navDrawerList" data="[[navDataProvider]]"
+        item.renderer="[[KnockoutTemplateUtils.getRenderer('navTemplate', true)]]" on-click="[[toggleDrawer]]"
+        selection="{{selection.path}}">
+      </oj-navigation-list>
+    </oj-drawer-popup>
+    <div id="pageContent" class="oj-web-applayout-page" style="height: 100%;">
+      <!--
+           ** Oracle JET V19.0.0 web application header pattern.
+           ** Please see the demos under Cookbook/Patterns/App Shell: Web
+           ** and the CSS documentation under Support/API Docs/Non-Component Styling
+           ** on the JET website for more information on how to use this pattern.
+        -->
+      <header role="banner" class="oj-web-applayout-header header">
+
+
+        <!-- 📱 CABECERA MÓVIL -->
+        <div class="header-movil">
+          <!-- 🎛️ ZONA IZQUIERDA -->
+          <div class="header-movil-seccion-izquierda">
+            <button class="icono-btn btn-hamburguesa" data-bind="click: toggleMenu">
+              ☰
+            </button>
+            <button class="icono-btn btn-historial" onclick="console.log('Historial/Recarga')">
+              ↻
+            </button>
+          </div>
+
+          <!-- 🎨 ZONA DERECHA -->
+          <div class="header-movil-seccion-derecha">
+            <button class="icono-btn btn-camara" onclick="console.log('Cámara/Captura')">
+              📷
+            </button>
+            <button class="icono-btn btn-favoritos" onclick="console.log('Favoritos')">
+              ❤️
+            </button>
+            <button class="icono-btn btn-color-verde" onclick="console.log('Carrito/Venta rápida')">
+              🛒
+            </button>
+          </div>
+        </div>
+
+
+      </header>
+
+
+
+
+      <div>
+        <div class="app-contenido">
+          <!-- Overlay -->
+          <div class="menu-overlay" data-bind="visible: isMenuOpen, click: closeMenu">
+          </div>
+
+          <!-- Menu lateral -->
+          <div class="menu" data-bind="css: { 'menu-open': isMenuOpen }">
+
+            <div class="menu-logo">
+              <img src="css/images/logo.png">
+            </div>
+
+            <oj-tab-bar id="navTabBar" data="[[navDataProvider]]" edge="start" selection="{{selection.path}}"
+              on-selection-changed="[[closeMenu]]"
+              item.renderer="[[KnockoutTemplateUtils.getRenderer('navTemplate', true)]]">
+            </oj-tab-bar>
+
+          </div>
+
+          <!-- CONTENIDO PRINCIPAL -->
+          <div class="contenido-principal">
+            <oj-module config="[[moduleAdapter.koObservableConfig]]"></oj-module>
+          </div>
+        </div>
+
+
+
+
+        <footer class="oj-web-applayout-footer" role="contentinfo">
+          <div class="oj-web-applayout-footer-item oj-web-applayout-max-width">
+            <ul>
+              <oj-bind-for-each data="[[footerLinks]]">
+                <template>
+                  <li>
+                    <a :id="[[$current.data.linkId]]" :href="[[$current.data.linkTarget]]">
+                      <oj-bind-text value="[[$current.data.name]]"></oj-bind-text>
+                    </a>
+                  </li>
+                </template>
+              </oj-bind-for-each>
+            </ul>
+          </div>
+          <div
+            class="oj-web-applayout-footer-item oj-web-applayout-max-width oj-text-color-secondary oj-typography-body-sm">
+            Copyright © 2025 Galapagos Development its affiliates All rights reserved.
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- This injects script tags for the main javascript files -->
+    <!-- injector:scripts -->
+    <!-- endinjector -->
+
+</body>
+
+</html>
+
+
+<div data-bind="visible: config.MensajeTitulo" class="Mensaje-contenedor-fijo">
+  <div class="Mensaje-Forma-Pildora" data-bind="class: config.MensajeColor">
+    <div class="Mensaje-Icono">
+      <span data-bind="text: config.MensajeIcono"></span>
+    </div>
+    <div class="Mensaje-texto">
+      <b data-bind="text: config.MensajeTitulo"></b>
+      <span data-bind="text: config.MensajeCuerpo"></span>
+    </div>
+    <button class="Mensaje-Cerrar" data-bind="click: config.CerrarAlerta">✕</button>
+  </div>
+</div>
+
+
+<!-- MODAL DE CARGA NUEVO CON SPINNER -->
+<oj-dialog id="ModalSpinner">
+  <div id="cargaGlobal" class="ModalCargando">
+    <div class="ModalCargando-contenido">
+      <h2 id="TituloModalSpinner" style="color: white;">&nbsp;</h2>
+      <!-- <label><strong>VALIDANDO DCOUMENTO</strong> </label> -->
+      <div class="ModalCargando-spinner"></div>
+      <div> <span id="txtModalSpinner"> </span></div>
+    </div>
+  </div>
+</oj-dialog>
