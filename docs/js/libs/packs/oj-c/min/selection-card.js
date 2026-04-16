@@ -1,6 +1,2 @@
-define(["require", "exports", "oj-c/selection-card/selection-card"], function (require, exports, selection_card_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.SelectionCard = void 0;
-    Object.defineProperty(exports, "SelectionCard", { enumerable: true, get: function () { return selection_card_1.SelectionCard; } });
-});
+define("oj-c/selection-card/selection-card",["require","exports","preact/jsx-runtime","@oracle/oraclejet-preact/translationBundle","@oracle/oraclejet-preact/UNSAFE_SelectionCard","ojs/ojvcomponent","css!oj-c/selection-card/selection-card-styles.css"],(function(require,e,t,c,o,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.SelectionCard=void 0,e.SelectionCard=(0,r.registerCustomElement)("oj-c-selection-card",(({children:e,selected:c})=>(0,t.jsx)(r.Root,{children:(0,t.jsx)(o.SelectionCard,{isSelected:c,width:"100%",height:"100%",children:e})})),"SelectionCard",{slots:{"":{}},properties:{selected:{type:"boolean"}}},void 0,{"@oracle/oraclejet-preact":c.default})})),define("oj-c/selection-card",["require","exports","oj-c/selection-card/selection-card"],(function(require,e,t){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.SelectionCard=void 0,Object.defineProperty(e,"SelectionCard",{enumerable:!0,get:function(){return t.SelectionCard}})}));
+//# sourceMappingURL=selection-card.js.map

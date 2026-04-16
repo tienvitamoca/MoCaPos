@@ -5,7 +5,5 @@
  * as shown at https://oss.oracle.com/licenses/upl/
  * @ignore
  */
-define(["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-});
+define("oj-c/area-chart-item",["require","exports"],(function(require,e){"use strict";Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=area-chart-item.js.map

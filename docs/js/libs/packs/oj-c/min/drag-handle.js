@@ -1,6 +1,2 @@
-define(["require", "exports", "oj-c/drag-handle/drag-handle"], function (require, exports, drag_handle_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.DragHandle = void 0;
-    Object.defineProperty(exports, "DragHandle", { enumerable: true, get: function () { return drag_handle_1.DragHandle; } });
-});
+define("oj-c/drag-handle/drag-handle",["require","exports","preact/jsx-runtime","@oracle/oraclejet-preact/translationBundle","ojs/ojvcomponent","@oracle/oraclejet-preact/UNSAFE_DragHandle"],(function(require,e,r,a,n,d){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.DragHandle=void 0;e.DragHandle=(0,n.registerCustomElement)("oj-c-drag-handle",(()=>(0,r.jsx)(n.Root,{children:(0,r.jsx)(d.DragHandle,{})})),"DragHandle",void 0,void 0,{"@oracle/oraclejet-preact":a.default})})),define("oj-c/drag-handle",["require","exports","oj-c/drag-handle/drag-handle"],(function(require,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.DragHandle=void 0,Object.defineProperty(e,"DragHandle",{enumerable:!0,get:function(){return r.DragHandle}})}));
+//# sourceMappingURL=drag-handle.js.map
