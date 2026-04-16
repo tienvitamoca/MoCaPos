@@ -1,0 +1,1 @@
+define(["knockout"],(function(r){return function(r){const o=this;o.proveedor=r?.proveedor,console.log("HIJO recibe:",o.proveedor),o.cerrar=function(){r?.onCerrar&&r.onCerrar()}}}));

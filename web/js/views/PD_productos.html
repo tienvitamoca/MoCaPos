@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOCA - Sistema de Gestión</title>
+</head>
+
+<body>
+    <div>
+
+        <!-- 🔎 BARRA DE BÚSQUEDA Y ACCIONES -->
+        <div class="header-seccion">
+
+
+            <oj-button class="btn-primario " on-oj-action="[[ProductoNuevo]]">
+                <span class="texto-blanco"> + </span>
+                <span class="texto-boton texto-blanco"> Nuevo</span>
+            </oj-button>
+
+            <form class="form-busqueda ">
+                <label class="label-busqueda" for="search">
+                    <oj-input-text class="inputBarraBusqueda" value="{{BarraBusqueda}}"
+                        on-raw-value-changed="[[BarraBuscar]]" placeholder="Buscar">
+                    </oj-input-text>
+                    <div class="cont-busqueda"></div>
+                    <div class="search">
+                        <svg class="svg-icono" viewBox="0 0 24 24" aria-hidden="true"
+                            class="r-14j79pv r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-4wgw6l r-f727ji r-bnwqim r-1plcrui r-lrvibr">
+                            <g>
+                                <path
+                                    d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
+                </label>
+            </form>
+
+
+
+            <div>
+                <oj-button class="icono-btn-redondo btn-color-naranja" on-oj-action="[[FNInventarioBajo]]">
+                    <span slot="startIcon">⚠️</span></oj-button>
+                </oj-button>
+            </div>
+        </div>
+
+
+        <!-- 🧾 TABLA PRINCIPAL DE PRODUCTOS -->
+        <div class="cuadro-contenedor">
+            <oj-table id="TablaProducto" class="tabla" aria-label="Productos" data="[[opcionesProductos]]"
+                selection-mode='{"row": "single"}' on-selection-changed="[[cambioSeleccion]]" columns="[[TblCols]]"
+                style="width:100%; font-size:16px;">
+
+                <template slot="templateEdit">
+                    <oj-button class="icono-btn-redondo btn-color-azul"
+                        on-oj-action="[[function(event, current){ abrirModal(current.data) }]]">
+                        <span slot="startIcon">✏️</span>
+                    </oj-button>
+                </template>
+            </oj-table>
+
+        </div>
+        <!-- Tabla Movil -->
+        <oj-table translations.msg-no-data="" class="TablaProductoMini" aria-label="Productos"
+            data="[[opcionesProductos]]" selection-mode='{"row": "single", "column": "none"}'
+            columns-default='{"sortable": "enabled"}' columns="[[TblColsMini]]" style="width:100%; font-size:13px;">
+
+            <template slot="templateEdit" data-oj-as="cell">
+                <oj-button class="icono-btn-redondo btn-color-azul" on-oj-action="[[abrirModal]]">
+                    <span slot="startIcon">✏️</span></oj-button>
+                </oj-button>
+            </template>
+        </oj-table>
+    </div>
+
+    <!-- ================= MODAL DE DESRIPCION DEL PRODUCTO  ================= -->
+    <oj-dialog id="Modal_Descripcion_Producto" modality="modal" cancel-behavior="icon"
+        style="width: 60%; max-width: 700px;" class="Modal">
+
+        <!-- HEADER PERSONALIZADO -->
+        <div slot="header" style="width:100%;">
+
+            <div class="oj-flex oj-flex-items-pad oj-flex-wrap oj-sm-padding-2x">
+                <div class="oj-flex-item oj-sm-12 oj-md-3">
+                    <!-- <h7>Descripción</h7> -->
+                    <label>
+                        <strong> Descripción </strong>
+                    </label>
+                </div>
+                <div class="oj-flex-item oj-sm-12 oj-md-8 oj-lg-8">
+                    <oj-input-text value="{{descripcionProducto}}" placeholder="Nombre del producto">
+                    </oj-input-text>
+                </div>
+                <oj-button class="icono-btn btn-color-rojo " style="margin-left: 5px;">
+                    <span slot="startIcon">🗑️</span></oj-button>
+                </oj-button>
+            </div>
+        </div>
+        <!-- <div slot="header" style="display:flex; align-items:center; gap:12px;">
+            <span style="font-weight:600;">Descripción:</span>
+
+            <oj-input-text value="{{descripcionProducto}}" placeholder="Nombre del producto">
+            </oj-input-text>
+        </div> -->
+
+        <!-- ================= BODY ================= -->
+        <div slot="body">
+
+            <!-- 1. Identificación del producto -->
+            <div class="oj-flex oj-flex-items-pad oj-flex-wrap oj-sm-padding-2x">
+                <div class="oj-flex-item oj-sm-12 oj-md-3">
+                    <label class="oj-text-secondary-color">
+                        Código #
+                    </label>
+                </div>
+                <div class="oj-flex-item oj-sm-12 oj-md-8 oj-lg-8">
+                    <oj-input-text value="{{CodigoProducto}}" class="oj-form-control-full-width"
+                        placeholder="Ingrese un codigo">
+                    </oj-input-text>
+                </div>
+            </div>
+
+            <!-- 2. Tipo de venta -->
+            <div class="oj-flex oj-flex-items-pad oj-flex-wrap oj-sm-padding-2x">
+                <div class="oj-flex-item oj-sm-12 oj-md-3">
+                    <label class="oj-text-secondary-color">
+                        Se vende por:
+                    </label>
+                </div>
+                <div class="oj-flex-item oj-sm-12 oj-md-8 oj-lg-8">
+                    <div class="alinea-check">
+                        <div class="radio-option">
+                            <input type="radio" id="unidad" name="tipoVenta" checked>
+                            <label for="unidad">Unidad/Pza</label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" id="granel" name="tipoVenta">
+                            <label for="granel">A Granel (Kg/L)</label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" id="paquete" name="tipoVenta">
+                            <label for="paquete">Paquete y suelto</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="porPaquete" class="oj-flex oj-flex-items-pad oj-flex-wrap oj-sm-padding-2x" style="display: none;">
+                <div class="oj-flex-item oj-sm-12 oj-md-3">
+                    <label class="oj-text-secondary-color">
+                        Num. de piezas por paquete:
+                    </label>
+                </div>
+                <div class="oj-flex-item oj-sm-12 oj-md-3 oj-lg-3">
+                    <oj-input-text value="{{piezasPaquete}}" class="oj-form-control-full-width"
+                        placeholder="Ingrese la cantidad que contiene el paquete">
+                    </oj-input-text>
+                </div>
+
+            </div>
+
+            <!-- 3. Detalles de presentación y precios -->
+            <div class="oj-flex oj-flex-items-pad oj-flex-wrap oj-sm-padding-2x">
+                <div class="oj-flex-item oj-sm-12 oj-md-3">
+                    <label class="oj-text-secondary-color">
+                        Presentación
+                    </label>
+                </div>
+                <div class="oj-flex-item oj-sm-12 oj-md-8 oj-lg-8">
+                    <oj-input-text value="{{PresentacionProducto}}" class="oj-form-control-full-width"
+                        placeholder="Ingrese una presentacion">
+                    </oj-input-text>
+                </div>
+            </div>
+
+            <div class="oj-flex oj-flex-items-pad oj-flex-wrap oj-sm-padding-2x">
+                <div class="oj-flex-item oj-sm-12 oj-md-3">
+                    <label class="oj-text-secondary-color">
+                        Costo del producto
+                    </label>
+                </div>
+                <div class="oj-flex-item oj-sm-12 oj-md-8 oj-lg-8">
+                    <oj-input-number value="{{costoProducto}}" class="oj-form-control-full-width"
+                        placeholder="Ingrese el costo" on-raw-value-changed="[[cambioCosto]]">
+                    </oj-input-number>
+                </div>
+            </div>
+
+            <div class="oj-flex oj-flex-items-pad oj-flex-wrap oj-sm-padding-2x">
+                <div class="oj-flex-item oj-sm-12 oj-md-3">
+                    <label class="oj-text-secondary-color">
+                        Ganancia %
+                    </label>
+                </div>
+                <div class="oj-flex-item oj-sm-12 oj-md-8 oj-lg-8">
+                    <oj-input-number value="{{gananciaProducto}}" min="0"
+                        on-raw-value-changed="[[cambioPorcentajeGanancia]]">
+                    </oj-input-number>
+                </div>
+            </div>
+
+            <div class="oj-flex oj-flex-items-pad oj-flex-wrap oj-sm-padding-2x">
+                <div class="oj-flex-item oj-sm-12 oj-md-3">
+                    <label class="oj-text-secondary-color">
+                        Precio del producto $
+                    </label>
+                </div>
+                <div class="oj-flex-item oj-sm-12 oj-md-8 oj-lg-8">
+                    <oj-input-number value="{{precioProducto}}" min="0" on-raw-value-changed="[[cambioPrecio]]">
+                    </oj-input-number>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- 4. Selección de departamento y proveedor -->
+        <div class="form-group">
+            <div class="form-row">
+                <label class="form-label">Departamento</label>
+                <oj-select-one>
+                    <oj-option value="">- Sin departamento -</oj-option>
+                </oj-select-one>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Proveedor</label>
+                <oj-select-one>
+                    <oj-option value="">- Sin proveedor -</oj-option>
+                </oj-select-one>
+            </div>
+        </div>
+
+        <!-- 5. Control de inventario -->
+        <div class="form-group">
+            <div class="alinea-check">
+                <input type="checkbox" id="usaInventario" checked value="{{usaInventario}}">
+                <label for="usaInventario">Este producto SÍ utiliza inventario.</label>
+            </div>
+
+            <div class="cuadro-contenedor" style="margin: 0px;">
+                <div style="margin-bottom: 10px;">Hay <span id="LblInventarioExistente">48</span> en este momento.
+                </div>
+
+                <div class="oj-flex oj-flex-items-pad oj-flex-wrap oj-sm-padding-2x">
+                    <div class="oj-flex-item oj-sm-12 oj-md-2" style="text-align: right;">
+                        <label class="oj-text-secondary-color" style="display: block;">
+                            Mínimo
+                        </label>
+                    </div>
+                    <div class="oj-flex-item oj-sm-12 oj-md-2 oj-lg-2">
+                        <oj-input-number value="{{InvMinimo}}" min="0">
+                        </oj-input-number>
+                    </div>
+                    <div class="oj-flex-item oj-sm-12 oj-md-2" style="text-align: right;">
+                        <label class="oj-text-secondary-color" style="display: block;">
+                            Máximo
+                        </label>
+                    </div>
+                    <div class="oj-flex-item oj-sm-12 oj-md-2 oj-lg-2">
+                        <oj-input-number value="{{InvMaximo}}" min="0">
+                        </oj-input-number>
+                    </div>
+
+                    <div class="oj-flex-item oj-sm-12 oj-md-2 oj-flex oj-sm-align-items-center"
+                        style="text-align: right;">
+                        <label class="texto-rojo" style="display: block;">
+                            Alerta de mínimo
+                        </label>
+                    </div>
+                    <div class="oj-flex-item oj-sm-12 oj-md-2 oj-lg-2">
+                        <oj-input-number value="{{alertaInventario}}" min="0">
+                        </oj-input-number>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- ================= FOOTER ================= -->
+        <div slot="footer" class="Modal-footer">
+            <oj-button class="btn-cancelar" on-oj-action="[[() => config.CerrarModal('Modal_Descripcion_Producto')]]">
+                <span slot="startIcon">Cancelar</span>
+            </oj-button>
+
+            <oj-button id="BtnModal" class="btn-aceptar" on-oj-action="[[BtnActualizarProducto]]">
+                <span id="BtnModalConfirmar" slot="startIcon">Actualizar</span>
+            </oj-button>
+        </div>
+    </oj-dialog>
+
+
+</body>
+
+</html>
