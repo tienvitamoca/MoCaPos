@@ -35,7 +35,10 @@ subir cambios entre ramas:
 Posicionarte dentro del proyecto y ejecutar:
 -- ojet restore
 -- ojet serve
-
+------------------para subir a git cambiando el nombre de web a doc----------------
+--ojet build web --release 
+-- Remove-Item -Path "docs" -Recurse -Force -ErrorAction SilentlyContinue
+-- Rename-Item -Path "web" -NewName "docs"
 
 
 ---------------Cambios entre ramas---------------

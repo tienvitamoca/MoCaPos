@@ -35,7 +35,7 @@ define(['utils/ProductService', 'utils/config', 'ojs/ojarraydataprovider', 'ojs/
       v_This.InvMinimo = ko.observable(5);
       v_This.InvMaximo = ko.observable(20);
       v_This.alertaInventario = ko.observable(3);
-      v_This.usaInventario = ko.obserzxvable();
+      v_This.usaInventario = ko.observable();
       v_This.InventarioExistente = ko.observable(48);
 
       v_This.piezasPaquete = ko.observable();
